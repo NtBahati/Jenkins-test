@@ -1,0 +1,39 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Check OS Version') {
+            steps {
+                script {
+                    if (isUnix()) {
+                        sh 'uname -a'
+                    } else {
+                        bat 'ver'
+                    }
+                }
+            }
+        }
+        stage('Check User') {
+            steps {
+                script {
+                    if (isUnix()) {
+                        sh 'whoami'
+                    } else {
+                        bat 'echo %USERNAME%'
+                    }
+                }
+            }
+        }
+        stage('List Home Directory Content') {
+            steps {
+                script {
+                    if (isUnix()) {
+                        sh 'ls -la ~'
+                    } else {
+                        bat 'dir %HOMEPATH%'
+                    }
+                }
+            }
+        }
+    }
+}
